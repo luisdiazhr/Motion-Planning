@@ -11,17 +11,17 @@ The planning algorithm is implemented in motion_planning.py. It uses utility fun
 The next sections explains how this is achieved.
 
 ## Reading Home Position
-In order for the drone to start planning from anywhere, the drone has to read the global home location from the first line of the colliders.csv. file and set that position as global home (self.set_home_position()). This is implemented at motion_planning.py line 124. It uses the function read_global_home() added to planning_utils.py.
+In order for the drone to start planning from anywhere, the drone has to read the global home location from the first line of the colliders.csv. file and set that position as global home. This is implemented at motion_planning.py line 127. It uses the function self.set_home_position().
 
 ## Taking off from Anywhere
-In order for the drone to be able to takeoff from anywhere, I use the utility function global_to_local() to convert to local position (using self.global_home() as well, which you just set). This is done at line 130.
+In order for the drone to be able to takeoff from anywhere, I retrieve the global position using `global_position = [self._longitude, self._latitude, self._altitude]`. Then, I use the function global_to_local() to convert to local position `NED_local_position = global_to_local(global_position,self.global_home)`.
 
 ## Planning Start Point
-In the starter code, the start point for planning is hardcoded as map center. Change this to be your current local position.
-The grid star point is calculated from line 144 to 146.
+The start point is the current local position. The grid start point is calculated in line 151.
 
 ## Setting a Goal Position
-Goal coordinates can be set at line .Then, they are to local coordinates at lines 151 to 152 to be used on the search algorithm.
+The goal coordinates can be hardcoded in line 158 .Then, they are transformed to local coordinates to use them in the searching algorithm 
+`grid_goal_local = global_to_local(grid_goal,self.global_home)`.
 
 ## Search Algorithm
 Diagonal motions are included to the A* implementation and have an assigned cost of sqrt(2). The diagonals movements are implemented by incorporating them in the Action enumerate. This requires a change in the method valid_actions() to account for those actions. Here is an example of the A* trajectories on a grid:
