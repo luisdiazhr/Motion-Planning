@@ -24,7 +24,12 @@ The goal coordinates can be hardcoded in line 158 .Then, they are transformed to
 `grid_goal_local = global_to_local(grid_goal,self.global_home)`.
 
 ## Search Algorithm
-Diagonal motions are included to the A* implementation and have an assigned cost of sqrt(2). The diagonals movements are implemented by incorporating them in the Action enumerate. This requires a change in the method valid_actions() to account for those actions. Here is an example of the A* trajectories on a grid:
-
+Diagonal motions are included to the A* implementation and have an assigned cost of sqrt(2). The diagonals movements are implemented by incorporating them in the Action enumerate. This requires a change in the method valid_actions() to account for those actions.
+```python
+    NORTH_WEST = (-1,-1, np.sqrt(2))
+    NORTH_EAST = (-1, 1, np.sqrt(2))
+    SOUTH_WEST = (1, -1, np.sqrt(2))
+    SOUTH_EAST = (1,  1, np.sqrt(2))`
+```    
 ## Path Pruning
 The path is pruned at line 162 using collinearity (collinearity_prune function) with the method provided by the lectures.
